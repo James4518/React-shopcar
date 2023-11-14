@@ -24,13 +24,21 @@
           newBooks[index].count += count;
           this.setState({ books: newBooks }); 
         }
+        remove(index) {
+          const newBooks = [...this.state.books];
+          newBooks.splice(index, 1);
+          this.setState({ books: newBooks});
+        }
         getTotalPrice() {
           const total = this.state.books.reduce((preValue, item) => {
             return preValue + item.count * item.price;
           }, 0);
           return "￥" + total.toFixed(2);
         }
-      render() {
+      showEmpty() {
+        return <div><h2>购物车空空如也，快去添加</h2></div>
+      }
+      showBooksList() {
         const { books } = this.state;
         return (
           <div>
@@ -61,7 +69,7 @@
                           {item.count}
                           <button onClick={() => this.changeCount(index, 1)}>+</button>
                         </td>
-                        <td><button>删除</button></td>
+                        <td><button onClick={() => this.remove(index)}>删除</button></td>
                       </tr>
                     )
                   })
@@ -69,8 +77,12 @@
               </tbody>
             </table>
             <h2>总计：{this.getTotalPrice()}</h2>
-          </div>   
-        )
+          </div>  
+        ) 
+      }
+      render(){
+        const { books } = this.state;
+        return books.length ? this.showBooksList() : this.showEmpty();
       }
     }
     const root = ReactDOM.createRoot(document.querySelector("#app"));
