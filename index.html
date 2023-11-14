@@ -24,7 +24,12 @@
           newBooks[index].count += count;
           this.setState({ books: newBooks }); 
         }
-
+        getTotalPrice() {
+          const total = this.state.books.reduce((preValue, item) => {
+            return preValue + item.count * item.price;
+          }, 0);
+          return "￥" + total.toFixed(2);
+        }
       render() {
         const { books } = this.state;
         return (
@@ -63,6 +68,7 @@
                 }
               </tbody>
             </table>
+            <h2>总计：{this.getTotalPrice()}</h2>
           </div>   
         )
       }
