@@ -19,6 +19,12 @@
             books : books
           }
         }
+        changeCount(index, count) {
+          const newBooks = [...this.state.books];
+          newBooks[index].count += count;
+          this.setState({ books: newBooks }); 
+        }
+
       render() {
         const { books } = this.state;
         return (
@@ -44,9 +50,11 @@
                         <td>{item.date}</td>
                         <td>{"￥" + item.price}</td>
                         <td>
-                          <button>-</button>
+                          <button 
+                            disabled={item.count <= 1}
+                            onClick={() => this.changeCount(index, -1)}>-</button>
                           {item.count}
-                          <button>+</button>
+                          <button onClick={() => this.changeCount(index, 1)}>+</button>
                         </td>
                         <td><button>删除</button></td>
                       </tr>
