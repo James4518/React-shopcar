@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>React-shoppingCar</title>
+</head>
+<body>
+  <div id="app"></div>
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="./data.js"></script>
+  <script type="text/babel">
+    class App extends React.Component{
+      constructor() {
+          super();
+          this.state = {
+            books : books
+          }
+        }
+      render() {
+        const { books } = this.state;
+        return (
+          <div>
+            <table>
+              <thead>
+                <tr>
+                  <th>序号</th>
+                  <th>书籍名称</th>
+                  <th>出版日期</th>
+                  <th>价格</th>
+                  <th>数量</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody>
+                {
+                  books.map((item, index) => {
+                    return (
+                      <tr>
+                        <td>{index + 1}</td>
+                        <td>{item.name}</td>
+                        <td>{item.date}</td>
+                        <td>{"￥" + item.price}</td>
+                        <td>
+                          <button>-</button>
+                          {item.count}
+                          <button>+</button>
+                        </td>
+                        <td><button>删除</button></td>
+                      </tr>
+                    )
+                  })
+                }
+              </tbody>
+            </table>
+          </div>   
+        )
+      }
+    }
+    const root = ReactDOM.createRoot(document.querySelector("#app"));
+    root.render(<App />);
+  </script>
+</body>
+</html>
